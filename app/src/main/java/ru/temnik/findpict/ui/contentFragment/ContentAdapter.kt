@@ -18,8 +18,12 @@ class ContentAdapter @Inject constructor(): RecyclerView.Adapter<ContentAdapter.
     private var items = mutableListOf<ImageDTO>()
     var isLoading = false
 
-    fun updateItems(items: List<ImageDTO>) {
-        this.items.addAll(items)
+    fun updateItems(newItems: List<ImageDTO>,loading: Boolean = false) {
+        if(loading){
+            items.addAll(newItems)
+        }else{
+            items = newItems.toMutableList()
+        }
         notifyDataSetChanged()
     }
 

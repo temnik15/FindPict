@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import kotlinx.android.synthetic.main.content_fragment.view.*
 import ru.temnik.findpict.ProfileView
 import ru.temnik.findpict.R
+import ru.temnik.findpict.ui.homeFragment.HomeFragment
 import ru.temnik.findpict.ui.contentFragment.dagger.DaggerContentPresenterComponent
 
 class ContentFragment : Fragment(), ProfileView {
@@ -26,7 +27,7 @@ class ContentFragment : Fragment(), ProfileView {
     ): View? {
         val view = inflater.inflate(R.layout.content_fragment, container, false)
         presenter.onAttach(this)
-        presenter.loadContent()
+        HomeFragment.contentPresenter=presenter
         view.recycler.adapter = presenter.contentAdapter
         view.recycler.layoutManager = StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL)
         addPaginationListener(view.recycler)
@@ -52,19 +53,26 @@ class ContentFragment : Fragment(), ProfileView {
                 val firstVisibleItems =manager.findFirstVisibleItemPositions(intArrayOf(0, 0, 0))[2]
                 val visibleItemCount = manager.childCount
                 val totalItemCount = manager.itemCount
-                if(!presenter.contentAdapter.isLoading){
+                if(!presenter.contentAdapter.isLoading && presenter.contentAdapter.itemCount>0){
                     if((visibleItemCount+firstVisibleItems+30)>=totalItemCount){
                         presenter.contentAdapter.isLoading=true
-                        presenter.loadContent()
+                        presenter.loadContent(presenter.currentQuery)
                     }
                 }
             } })
     }
 
-    override fun setErrorFragment() {
-        val fragment = parentFragment
-        if(fragment!=null && fragment is ProfileView){
-            fragment.setErrorFragment()
+    override fun visibilityError(visible: Boolean) {
+        val activity = this.activity
+        if(activity!=null && activity is ProfileView){
+            activity.visibilityError(visible)
+        }
+    }
+
+    override fun visibilityLoading(visible: Boolean) {
+        val activity = this.activity
+        if(activity!=null && activity is ProfileView){
+            activity.visibilityLoading(visible)
         }
     }
 }
