@@ -3,5 +3,6 @@ package ru.temnik.findpict
 
 
 interface ProfileView {
-    fun setErrorFragment()
+    fun visibilityError(visible:Boolean = false)
+    fun visibilityLoading(visible:Boolean = false){}
 }
