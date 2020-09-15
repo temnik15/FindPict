@@ -7,4 +7,11 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="ActionBarThemeOverlay">
+        <item name="android:textColorPrimary">@color/text_search</item>
+        <item name="colorControlNormal">@color/text_search_hint</item>
+        <item name="colorControlHighlight">@color/text_search_hint</item>
+        <item name="android:textColorHint">@color/text_search_hint</item>
+        <item name="closeIcon">@color/text_search_hint</item>
+    </style>
 </resources>
