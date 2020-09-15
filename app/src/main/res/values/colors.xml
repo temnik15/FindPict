@@ -9,6 +9,9 @@
     <color name="background_fragment">#323232</color>
     <color name="search_block">#515151</color>
     <color name="text_image_info">#FFFFFF</color>
+    <color name="text_search_hint">#ACA9A9</color>
+    <color name="text_search">#FFFFFF</color>
     <color name="app_name">#9E9C9C</color>
+    <color name="transparent">#009E9C9C</color>
 
 </resources>
