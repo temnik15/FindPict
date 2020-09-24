@@ -7,26 +7,22 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import kotlinx.android.synthetic.main.item_image.view.*
 import ru.temnik.findpict.R
 import ru.temnik.findpict.entityDTO.ImageDTO
 import javax.inject.Inject
 
 
-class HomeImageAdapter @Inject constructor(): RecyclerView.Adapter<HomeImageAdapter.ViewHolder>() {
-
-    companion object{
-        private var onImgListener:OnImageClickListener? = null
-    }
-    var items = mutableListOf<ImageDTO>()
-    var isLoading = false
+class HomeAdapter @Inject constructor() : RecyclerView.Adapter<HomeAdapter.ViewHolder>() {
+    private var imageClickListener: OnImageClickListener? = null
+    private var items = mutableListOf<ImageDTO>()
 
 
-
-    fun updateItems(newItems: List<ImageDTO>,loading: Boolean = false) {
-        if(loading){
+    fun updateItems(newItems: List<ImageDTO>, loading: Boolean = false) {
+        if (loading) {
             items.addAll(newItems)
-        }else{
+        } else {
             items = newItems.toMutableList()
         }
         notifyDataSetChanged()
@@ -40,45 +36,45 @@ class HomeImageAdapter @Inject constructor(): RecyclerView.Adapter<HomeImageAdap
     override fun getItemCount() = items.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(items[position],position)
+        holder.bind(items[position])
     }
 
-    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView),View.OnClickListener {
+    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView),
+        View.OnClickListener {
+
         val imageView: ImageView = itemView.imageView
         private val imageInfo: TextView = itemView.image_info_view
-        lateinit var item:ImageDTO
-        init{
+        lateinit var item: ImageDTO
+            private set
+
+        init {
             itemView.setOnClickListener(this)
         }
-        fun bind(item:ImageDTO,position: Int){
+
+        fun bind(item: ImageDTO) {
+            this.item = item
             Glide.with(itemView.context)
                 .load(item.previewURL)
                 .into(imageView)
             val imageSize = "${item.imageWidth}x${item.imageHeight}"
-            imageInfo.text=imageSize
-            //
-            imageView.tag = position
-            val transitionName = imageView.context.getString(R.string.transition_name)
-            imageView.transitionName ="$transitionName - $position"
-            //
-            this.item=item
+            imageInfo.text = imageSize
         }
 
         override fun onClick(v: View?) {
-           onImgListener?.onImageClick(this)
+            imageClickListener?.onImageClick(this)
         }
     }
 
 
-    fun onAttach(onImgListener:OnImageClickListener){
-        HomeImageAdapter.onImgListener=onImgListener
+    fun onAttach(imageClickListener: OnImageClickListener) {
+        this.imageClickListener = imageClickListener
     }
 
-    fun onDetach(){
-        onImgListener=null
+    fun onDetach() {
+        imageClickListener = null
     }
 
-    interface OnImageClickListener{
-        fun onImageClick(holder:ViewHolder)
+    interface OnImageClickListener {
+        fun onImageClick(holder: ViewHolder)
     }
 }
