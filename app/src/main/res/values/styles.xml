@@ -5,6 +5,11 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowContentTransitions">true</item>
+    </style>
+
+    <style name="AppTheme.Launcher">
+        <item name="android:windowBackground">@drawable/launch_screen</item>
     </style>
 
     <style name="ActionBarThemeOverlay">
@@ -13,5 +18,9 @@
         <item name="colorControlHighlight">@color/text_search_hint</item>
         <item name="android:textColorHint">@color/text_search_hint</item>
         <item name="closeIcon">@color/text_search_hint</item>
+    </style>
+    
+    <style name="Theme.AppCompat.Dialog">
+        <item name="android:background">@color/default_background</item>
     </style>
 </resources>
