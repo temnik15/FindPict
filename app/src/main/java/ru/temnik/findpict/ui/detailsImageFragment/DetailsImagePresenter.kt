@@ -41,7 +41,6 @@ class DetailsImagePresenter : ProfilePresenter {
 
 
     fun saveImageToGallery() {
-        //TODO(ЗАПРОСИТЬ РАЗРЕШЕНИЕ)
         val view = profileView
         val itemSave = item
         if (itemSave != null && view != null && view is DetailsImageFragment) {
