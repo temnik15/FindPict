@@ -7,7 +7,7 @@ import ru.temnik.findpict.network.api.imageAPI.ImageAPI
 
 object  NetworkService {
     private val retrofit:Retrofit = Retrofit.Builder()
-        .baseUrl(AppData.baseUrl)
+        .baseUrl(AppData.BASE_URL)
         .addConverterFactory(GsonConverterFactory.create())
         .build()
 
