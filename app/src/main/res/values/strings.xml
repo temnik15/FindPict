@@ -2,4 +2,8 @@
     <string name="app_name">FindPict</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
+
+    <!--app  -->
+    <string name="default_transition_name">image_view</string>
+    <string name="default_loading_image_info">Загрузка изображения...</string>
 </resources>
