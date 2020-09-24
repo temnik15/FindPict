@@ -1,10 +1,10 @@
-package ru.temnik.findpict.ui.contentFragment.dagger
+package ru.temnik.findpict.ui.homeFragment.dagger
 
 import dagger.Component
-import ru.temnik.findpict.ui.contentFragment.ContentPresenter
+import ru.temnik.findpict.ui.homeFragment.HomePresenter
 
 
 @Component
-interface ContentPresenterComponent {
-    fun getContentPresenter():ContentPresenter
+interface HomePresenterComponent {
+    fun getHomePresenter():HomePresenter
 }
