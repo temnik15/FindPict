@@ -8,7 +8,8 @@ object AppData {
     //System
     const val APP_LOG_NAME = "[FindPict_APP]"
     const val DEBUG_TAG = "FindPict"
-    const val REQUEST_CODE = 2703
+    const val REQUEST_CODE_PERMISSIONS = 2703
+    const val REQUEST_CODE_SHARE_IMAGE = 2704
     const val DEFAULT_SAVE_IMAGES_DIRECTORY = "FindPict/images"
 
     const val APP_SHARED_PREF = "FIND_PICT_SHARED_PREF"
