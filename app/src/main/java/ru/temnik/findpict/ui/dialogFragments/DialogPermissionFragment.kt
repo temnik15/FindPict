@@ -48,7 +48,7 @@ class DialogPermissionFragment : DialogFragment() {
             Uri.parse("package:" + context?.packageName)
         )
         val fragment = fragmentManager?.findFragmentByTag(DetailsImageFragment.tag)
-        fragment?.startActivityForResult(appSettingsIntent, AppData.REQUEST_CODE)
+        fragment?.startActivityForResult(appSettingsIntent, AppData.REQUEST_CODE_PERMISSIONS)
     }
 
 
