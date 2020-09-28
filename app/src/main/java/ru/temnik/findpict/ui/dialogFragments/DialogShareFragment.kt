@@ -1,4 +1,4 @@
-package ru.temnik.findpict.ui.dialogShareFragment
+package ru.temnik.findpict.ui.dialogFragments
 
 import android.app.Dialog
 import android.content.Intent
@@ -14,7 +14,6 @@ import io.reactivex.Observer
 import io.reactivex.disposables.Disposable
 import ru.temnik.findpict.AppData
 import ru.temnik.findpict.R
-import ru.temnik.findpict.ui.detailsImageFragment.DetailsImageFragment
 import ru.temnik.findpict.ui.detailsImageFragment.DetailsImageFragment.Companion.item
 import ru.temnik.findpict.ui.detailsImageFragment.DetailsImageFragment.Companion.presenter
 import ru.temnik.findpict.ui.detailsImageFragment.DetailsImageFragment.Companion.sharedUri
@@ -71,6 +70,7 @@ class DialogShareFragment : DialogFragment() {
                         type = "image/*"
                         putExtra(Intent.EXTRA_STREAM, it)
                     }
+                    // TODO(Решить что делать с изображением)
                     parentFragment?.startActivity(Intent.createChooser(share, "Поделиться изображением"))
                     sharedUri = it
 //                    parentFragment?.startActivityForResult(
