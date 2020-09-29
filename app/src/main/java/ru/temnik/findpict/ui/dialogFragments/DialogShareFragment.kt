@@ -2,21 +2,26 @@ package ru.temnik.findpict.ui.dialogFragments
 
 import android.app.Dialog
 import android.content.Intent
-import android.net.Uri
+import android.graphics.Bitmap
 import android.os.Bundle
 import android.util.Log
 import android.view.ContextThemeWrapper
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.core.content.FileProvider
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import io.reactivex.Observer
 import io.reactivex.disposables.Disposable
 import ru.temnik.findpict.AppData
+import ru.temnik.findpict.BuildConfig
 import ru.temnik.findpict.R
+import ru.temnik.findpict.entityDTO.ImageDTO
+import ru.temnik.findpict.ui.detailsImageFragment.DetailsImageFragment
 import ru.temnik.findpict.ui.detailsImageFragment.DetailsImageFragment.Companion.item
 import ru.temnik.findpict.ui.detailsImageFragment.DetailsImageFragment.Companion.presenter
-import ru.temnik.findpict.ui.detailsImageFragment.DetailsImageFragment.Companion.sharedUri
+import java.io.ByteArrayOutputStream
+import java.io.File
+import java.io.FileOutputStream
 
 class DialogShareFragment : DialogFragment() {
     companion object {
@@ -25,9 +30,10 @@ class DialogShareFragment : DialogFragment() {
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val message = "Выберите способ поделиться: "
-        val imageBtn = "Поделиться картинкой"
-        val linkBtn = "Поделиться ссылкой"
+        val message =
+            activity?.getString(R.string.dialog_share_choose_way_share) ?: "Сhoose a way to share: "
+        val imageBtn = activity?.getString(R.string.dialog_share_share_picture) ?: "Share picture"
+        val linkBtn = activity?.getString(R.string.dialog_share_share_link) ?: "Share link"
         val builder =
             AlertDialog.Builder(ContextThemeWrapper(activity!!, R.style.Theme_AppCompat_Dialog))
 
@@ -47,7 +53,7 @@ class DialogShareFragment : DialogFragment() {
     }
 
     private fun shareImage() {
-        presenter.saveImage(getImageShareObserver())
+        presenter.shareImage(getShareObserver())
     }
 
     private fun shareLink() {
@@ -56,41 +62,70 @@ class DialogShareFragment : DialogFragment() {
         sharingIntent.putExtra(Intent.EXTRA_TEXT, item.largeImageURL)
         startActivity(sharingIntent)
     }
-    private fun getImageShareObserver(): Observer<Pair<Boolean, Uri?>> {
-        return object : Observer<Pair<Boolean, Uri?>> {
+
+    private fun getShareObserver(item: ImageDTO = DetailsImageFragment.item): Observer<Bitmap> {
+        return object : Observer<Bitmap> {
             override fun onSubscribe(d: Disposable) {
-                Toast.makeText(parentFragment?.context,"Изображение подготавливается",Toast.LENGTH_SHORT).show()
+
             }
 
-            override fun onNext(t: Pair<Boolean, Uri?>) {
-                Log.d(AppData.DEBUG_TAG,Thread.currentThread().name)
-                val uri = t.second
-                uri?.let {
-                    val share = Intent(Intent.ACTION_SEND).apply {
-                        type = "image/*"
-                        putExtra(Intent.EXTRA_STREAM, it)
+            override fun onNext(t: Bitmap) {
+                val context = parentFragment?.context
+                if (context != null) {
+                    val imageFormat = item.largeImageURL?.substringAfterLast(".") ?: "jpg"
+                    val file =
+                        File(context.filesDir, "${AppData.DEFAULT_SHARED_IMAGE_NAME}.$imageFormat")
+                    if (file.exists()) {
+                        file.delete()
                     }
-                    // TODO(Решить что делать с изображением)
-                    parentFragment?.startActivity(Intent.createChooser(share, "Поделиться изображением"))
-                    sharedUri = it
-//                    parentFragment?.startActivityForResult(
-//                        Intent.createChooser(share, "Поделиться изображением"),
-//                        AppData.REQUEST_CODE_SHARE_IMAGE
-//                    )
+                    file.createNewFile()
+                    val byteArrayImage = ByteArrayOutputStream()
+                    val bitmapFormat = presenter.getBitmapCompressFormat(imageFormat)
+                    t.compress(bitmapFormat, 90, byteArrayImage)
+                    val outStream = FileOutputStream(file)
+                    outStream.write(byteArrayImage.toByteArray())
+                    outStream.flush()
+                    outStream.close()
+                    val uri =
+                        FileProvider.getUriForFile(context, BuildConfig.APPLICATION_ID, file)
 
+                    uri?.let {
+                        val share = Intent(Intent.ACTION_SEND).apply {
+                            type = "image/*"
+                            putExtra(Intent.EXTRA_STREAM, it)
+                        }
+
+                        parentFragment?.startActivity(
+                            Intent.createChooser(
+                                share,
+                                parentFragment?.getString(R.string.dialog_share_share_picture)
+                                    ?: "Share picture"
+                            )
+                        )
+                        Log.d(
+                            AppData.DEBUG_TAG,
+                            "Успешная передача uri картинки в другое приложение!"
+                        )
+                    }
                 }
             }
 
             override fun onError(e: Throwable) {
+                val context = parentFragment
+                if (context != null && context is DetailsImageFragment) {
+                    val fragment =
+                        DialogNotificationFragment.newInstance(
+                            context.getString(R.string.details_default_failed_loading_image_info),
+                            context.getString(R.string.default_check_internet)
+                        )
+                    fragment.show(context.childFragmentManager, DialogNotificationFragment.tag)
+                }
 
+                Log.d(AppData.DEBUG_TAG, "Ошибка передачи картинки в другое приложение!")
             }
 
             override fun onComplete() {
-
             }
         }
     }
-
-
-
 }
