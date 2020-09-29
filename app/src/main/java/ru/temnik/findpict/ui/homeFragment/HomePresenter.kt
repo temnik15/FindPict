@@ -19,20 +19,19 @@ class HomePresenter @Inject constructor(homeAdapter: HomeAdapter) : ProfilePrese
         private set
 
     var isLoading = false
-    var currentQuery: String = ""
-        private set
+    private var currentQuery: String = ""
     private var contentPage = 1
 
 
     fun search(query: String) {
         contentPage = 1
         homeAdapter.updateItems(emptyList())
-        profileView?.visibilityLoading(true)
         currentQuery = query
-        loadContent(query)
+        profileView?.visibilityLoading(true)
+        profileView?.visibilityNoContent(false)
+        loadContent()
     }
-
-    fun loadContent(query: String) {
+    fun loadContent(query: String = currentQuery){
         isLoading = true
         if (profileView != null) {
             NetworkService.getImageApi()
@@ -40,7 +39,9 @@ class HomePresenter @Inject constructor(homeAdapter: HomeAdapter) : ProfilePrese
                 .enqueue(object : Callback<ApiRootDTO> {
                     override fun onFailure(call: Call<ApiRootDTO>, t: Throwable) {
                         profileView?.visibilityLoading(false)
+                        profileView?.visibilityTextError(contentPage == 1)
                         profileView?.visibilityError(true)
+
                         Log.d(
                             AppData.DEBUG_TAG,
                             "$logName Retrofit --> Запрос: \"$query\". Ошибка загрузки контента!"
@@ -54,13 +55,18 @@ class HomePresenter @Inject constructor(homeAdapter: HomeAdapter) : ProfilePrese
                     ) {
                         profileView?.visibilityLoading(false)
                         profileView?.visibilityError(false)
+                        profileView?.visibilityTextError(false)
+
 
                         val items = response.body()?.hits
                         if (items != null) {
-                            if(isLoading){
+                            if (isLoading) {
+                                if (items.isEmpty() && contentPage == 1) profileView?.visibilityNoContent(
+                                    true
+                                )
                                 homeAdapter.updateItems(items, true)
                             }
-                            contentPage++
+                            if (items.isNotEmpty()) contentPage++
                             isLoading = false
                             Log.d(
                                 AppData.DEBUG_TAG,
@@ -71,7 +77,6 @@ class HomePresenter @Inject constructor(homeAdapter: HomeAdapter) : ProfilePrese
                 })
         }
     }
-
     override fun onAttach(view: ProfileView) {
         profileView = view
     }
