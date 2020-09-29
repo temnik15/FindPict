@@ -1,11 +1,12 @@
 package ru.temnik.findpict
 
-import android.content.Context
-
 
 interface ProfileView {
-    fun visibilityError(visible:Boolean = false){}
-    fun visibilityLoading(visible:Boolean = false){}
-    fun visibilityAppName(visible:Boolean = false){}
-    fun onBackPressed():Boolean
+    fun visibilityError(visible: Boolean) {}
+    fun visibilityTextError(visible: Boolean) {}
+    fun visibilityLoading(visible: Boolean) {}
+    fun visibilitySave(visible: Boolean) {}
+    fun visibilityNoContent(visible: Boolean) {}
+    fun visibilityAppName(visible: Boolean) {}
+    fun onBackPressed(): Boolean
 }
