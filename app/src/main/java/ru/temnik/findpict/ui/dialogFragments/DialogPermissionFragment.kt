@@ -1,4 +1,4 @@
-package ru.temnik.findpict.ui.dialogPermissionFragment
+package ru.temnik.findpict.ui.dialogFragments
 
 import android.app.Dialog
 import android.content.Intent
@@ -13,19 +13,17 @@ import ru.temnik.findpict.R
 import ru.temnik.findpict.ui.detailsImageFragment.DetailsImageFragment
 
 class DialogPermissionFragment : DialogFragment() {
-    companion object{
+    companion object {
         val tag = DialogPermissionFragment::class.java.simpleName
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val message =
-            "Разрешение на доступ к памяти не было получено. Разрешение можно дать в разделе \"О приложении\"."
-        val cancelBtn = "ОТМЕНА"
-        val settingBtn = "О ПРИЛОЖЕНИИ"
+        val message = activity?.getString(R.string.dialog_permission_default_message)
+            ?: "No memory access permission was granted. Permission can be given in the section \"About the application\""
+        val cancelBtn = activity?.getString(R.string.dialog_permission_btn_cancel)?:"CANCEL"
+        val settingBtn =  activity?.getString(R.string.dialog_permission_btn_about_app)?:"ABOUT THE APP"
         val builder =
             AlertDialog.Builder(ContextThemeWrapper(activity!!, R.style.Theme_AppCompat_Dialog))
-
-
         builder.setMessage(message)
 
         builder.setPositiveButton(
