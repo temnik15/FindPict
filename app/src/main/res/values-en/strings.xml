@@ -1,2 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="app_name">FindPict</string>
+    <!--app  -->
+    <string name="default_transition_name">image_view</string>
+
+
+    <string name="default_check_internet">Check your internet connection.</string>
+
+    <!-- Home fragment  -->
+    <string name="home_fragment_default_load_pictures">Loading pictures…</string>
+    <string name="home_fragment_default_query_hint">Search pictures</string>
+    <string name="home_fragment_default_no_pictures">No images found.</string>
+    <string name="home_fragment_default_failed_load_images">Failed to load pictures.</string>
+    <string name="home_fragment_default_first_failed_load">Failed to load pictures. Swipe down on the screen to reload.</string>
+    <!-- Details fragment  -->
+    <string name="details_default_loading_image_info">Loading an image…</string>
+    <string name="details_default_failed_loading_image_info">Loading error.</string>
+    <string name="details_default_success_loading_image_info">Saved successfully.</string>
+    <string name="details_default_failed_save_image">Failed to save picture.</string>
+    <string name="details_default_failed_load_image">Failed to upload picture.</string>
+
+
+    <!-- SaveImageHelper -->
+    <string name="saveimage_helper_failed_load">Failed to prepare picture.</string>
+    <!-- DialogNotification fragment -->
+    <string name="dialog_notification_btn_ok">OK</string>
+    <!-- DialogPermission fragment -->
+    <string name="dialog_permission_default_message">No memory access permission was granted. Permission can be given in the section \"About the application\"</string>
+    <string name="dialog_permission_btn_cancel">Cancel</string>
+    <string name="dialog_permission_btn_about_app">ABOUT THE APP</string>
+    <!-- DialogShare fragment -->
+    <string name="dialog_share_choose_way_share">Choose a way to share: </string>
+    <string name="dialog_share_share_picture">Share picture</string>
+    <string name="dialog_share_share_link">Share link</string>
+</resources>
