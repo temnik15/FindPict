@@ -1,9 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">FindPict</string>
-    <string name="dummy_button">Dummy Button</string>
-    <string name="dummy_content">DUMMY\nCONTENT</string>
+
 
     <!--app  -->
     <string name="default_transition_name">image_view</string>
-    <string name="default_loading_image_info">Загрузка изображения...</string>
+
+
+    <string name="default_check_internet">Проверьте интернет-соединение.</string>
+
+    <!-- Home fragment  -->
+    <string name="home_fragment_default_load_pictures">Загрузка картинок…</string>
+    <string name="home_fragment_default_query_hint">Поиск картинок</string>
+    <string name="home_fragment_default_no_pictures">Картинок не найдено.</string>
+    <string name="home_fragment_default_failed_load_images">Не удалось загрузить картинки.</string>
+    <string name="home_fragment_default_first_failed_load">Не удалось загрузить картинки. Проведите по экрану вниз, чтобы загрузить заново.</string>
+    <!-- Details fragment  -->
+    <string name="details_default_loading_image_info">Загрузка изображения…</string>
+    <string name="details_default_failed_loading_image_info">Ошибка загрузки.</string>
+    <string name="details_default_success_loading_image_info">Успешно сохранено.</string>
+    <string name="details_default_failed_save_image">Не удалось сохранить картинку.</string>
+    <string name="details_default_failed_load_image">Не удалось загрузить картинку.</string>
+
+
+    <!-- SaveImageHelper -->
+    <string name="saveimage_helper_failed_load">Не удалось подготовить картинку.</string>
+    <!-- DialogNotification fragment -->
+    <string name="dialog_notification_btn_ok">OK</string>
+    <!-- DialogPermission fragment -->
+    <string name="dialog_permission_default_message">Разрешение на доступ к памяти не было получено. Разрешение можно дать в разделе \"О приложении\".</string>
+    <string name="dialog_permission_btn_cancel">Отмена</string>
+    <string name="dialog_permission_btn_about_app">О ПРИЛОЖЕНИИ</string>
+    <!-- DialogShare fragment -->
+    <string name="dialog_share_choose_way_share">Выберите способ поделиться: </string>
+    <string name="dialog_share_share_picture">Поделиться картинкой</string>
+    <string name="dialog_share_share_link">Поделиться ссылкой</string>
+
+
 </resources>

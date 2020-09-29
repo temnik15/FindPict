@@ -1,4 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    
+
+    <dimen name="default__extra_large_margin">64dp</dimen>
+    <dimen name="default_medium_margin">16dp</dimen>
+    <dimen name="default_small_margin">8dp</dimen>
+    <dimen name="default_icon_btn_size">32dp</dimen>
+    <dimen name="default_large_text_size">64sp</dimen>
+    <dimen name="default_medium_text_size">32sp</dimen>
+    <dimen name="default_medium_two_text_size">24sp</dimen>
+    <dimen name="default_small_text_size">16sp</dimen>
+    <dimen name="default_small_two_text_size">18sp</dimen>
+
+
+    <dimen name="default_small_padding">4dp</dimen>
+    <dimen name="default_extra_small_padding">2dp</dimen>
+    <!-- Home fragment -->
+    <dimen name="default_search_bar_height">48dp</dimen>
+    <dimen name="default_error_frame_height">48dp</dimen>
+    <!-- Details image fragment -->
+    <dimen name="arrow_back_width">24dp</dimen>
+    <dimen name="arrow_back_height">24dp</dimen>
+    <dimen name="error_btn_height">48dp</dimen>
+
+    <!-- item image -->
+    <dimen name="default_image_height">128dp</dimen>
+
 </resources>

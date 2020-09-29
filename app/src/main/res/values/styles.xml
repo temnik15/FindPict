@@ -22,5 +22,6 @@
     
     <style name="Theme.AppCompat.Dialog">
         <item name="android:background">@color/default_background</item>
+        <item name="android:textColor">@color/text_dialog_fragment</item>
     </style>
 </resources>
