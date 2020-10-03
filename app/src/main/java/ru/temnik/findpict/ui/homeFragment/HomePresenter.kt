@@ -31,7 +31,8 @@ class HomePresenter @Inject constructor(homeAdapter: HomeAdapter) : ProfilePrese
         profileView?.visibilityNoContent(false)
         loadContent()
     }
-    fun loadContent(query: String = currentQuery){
+
+    fun loadContent(query: String = currentQuery) {
         isLoading = true
         if (profileView != null) {
             NetworkService.getImageApi()
@@ -56,8 +57,6 @@ class HomePresenter @Inject constructor(homeAdapter: HomeAdapter) : ProfilePrese
                         profileView?.visibilityLoading(false)
                         profileView?.visibilityError(false)
                         profileView?.visibilityTextError(false)
-
-
                         val items = response.body()?.hits
                         if (items != null) {
                             if (isLoading) {
@@ -73,10 +72,22 @@ class HomePresenter @Inject constructor(homeAdapter: HomeAdapter) : ProfilePrese
                                 "$logName Retrofit --> Запрос: \"$query\". Загрузка контента выполнена! items.size = ${items.size}"
                             )
                         }
+                        val headers = response.headers()
+
+                        if (headers != null) {
+                            //Максимальное количество запросов, которые потребитель может сделать за 30 минут.
+                            Log.d(AppData.DEBUG_TAG,headers["X-RateLimit-Limit"])
+                            // Количество запросов, оставшихся в текущем окне ограничения скорости.
+                            Log.d(AppData.DEBUG_TAG,headers["X-RateLimit-Remaining"])
+                            //Оставшееся время в секундах, по истечении которого текущее окно ограничения скорости сбрасывается.
+                            Log.d(AppData.DEBUG_TAG,headers["X-RateLimit-Reset"])
+                        }
+
                     }
                 })
         }
     }
+
     override fun onAttach(view: ProfileView) {
         profileView = view
     }
